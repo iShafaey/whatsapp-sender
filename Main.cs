@@ -12,6 +12,8 @@ using System.Windows.Forms;
 namespace Whatsapp_Sender_Mini_Edition {
     public partial class Main : Form {
         private string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "numbers.txt");
+        private int processId;
+        private Process runningProcess;
 
         public Main() {
             InitializeComponent();
@@ -270,11 +272,23 @@ namespace Whatsapp_Sender_Mini_Edition {
             CopySelectedImages();
         }
 
-        private void btnRunSenderVendor_Click(object sender, EventArgs e) {
+        private async void btnRunSenderVendor_Click(object sender, EventArgs e) {
             var src = Application.StartupPath;
-            Process.Start(src + "\\run-service.bat");
-            statusLable("تم تشغيلة - اذا اردت (اضافه / تعديل / حذف) عملاء او اضافه صور / حذف صور يجب اولا اغلاق مزود الرسائل", Color.Green);
-            //endWsVendor.Visible = true;
+            string pythonScript = src + "\\ws-vendor.py";
+
+            statusLable("يعمل", Color.Green);
+
+            //restartService.Visible = true;
+            //endService.Visible = true;
+
+            AppendTextToOutput("Running script, please wait...");
+
+            try {
+                runningProcess = await RunPythonScriptAsync(pythonScript);
+
+            } catch (Exception ex) {
+                AppendTextToOutput($"Error: {ex.Message}");
+            }
         }
 
         private void Main_Load(object sender, EventArgs e) {
@@ -344,5 +358,60 @@ namespace Whatsapp_Sender_Mini_Edition {
         private void endWsVendor_Click(object sender, EventArgs e) {
             
         }
+
+        private async Task<Process> RunPythonScriptAsync(string scriptPath) {
+            try {
+                var processStartInfo = new ProcessStartInfo {
+                    FileName = "python",
+                    Arguments = $"\"{scriptPath}\"",
+                    RedirectStandardOutput = false,
+                    RedirectStandardError = false,
+                    UseShellExecute = false,
+                    CreateNoWindow = false
+                };
+
+                using (var process = new Process { StartInfo = processStartInfo }) {
+                    process.Start();
+
+                    string output = await process.StandardOutput.ReadToEndAsync();
+                    string error = await process.StandardError.ReadToEndAsync();
+
+                    await Task.Run(() => process.WaitForExit());
+
+                    if (!string.IsNullOrEmpty(error)) {
+                        AppendTextToOutput($"Error: {error}");
+                        return null;
+                    }
+                    AppendTextToOutput($"Output: {output}");
+                    return process;
+                }
+            } catch (Exception ex) {
+                AppendTextToOutput($"Exception occurred:\n{ex.Message}");
+                return null;
+            }
+        }
+
+        private void AppendTextToOutput(string text) {
+            statusLabel.Text = text;
+            //if (txtOutput.InvokeRequired) {
+            //    txtOutput.Invoke(new Action(() => txtOutput.AppendText(text + Environment.NewLine)));
+            //} else {
+            //    txtOutput.AppendText(text + Environment.NewLine);
+            //}
+        }
+
+        private void endService_Click(object sender, EventArgs e) {
+            if (runningProcess != null && !runningProcess.HasExited) {
+                try {
+                    runningProcess.Kill();
+                    AppendTextToOutput($"Process with PID {runningProcess.Id} has been terminated.");
+                } catch (Exception ex) {
+                    AppendTextToOutput($"Error stopping process: {ex.Message}");
+                }
+            } else {
+                AppendTextToOutput("No running process to stop.");
+            }
+        }
+
     }
 }

@@ -31,7 +31,8 @@
             this.status = new System.Windows.Forms.StatusStrip();
             this.lblStatusTitle = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.endWsVendor = new System.Windows.Forms.ToolStripStatusLabel();
+            this.restartService = new System.Windows.Forms.ToolStripStatusLabel();
+            this.endService = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.btnOpenVcard = new System.Windows.Forms.Button();
             this.btnRunSenderVendor = new System.Windows.Forms.Button();
@@ -42,10 +43,14 @@
             this.menu = new System.Windows.Forms.MenuStrip();
             this.systemMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.installComponents = new System.Windows.Forms.ToolStripMenuItem();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.txtOutput = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.clientsList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imagesList)).BeginInit();
             this.status.SuspendLayout();
             this.menu.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // clientsList
@@ -56,7 +61,7 @@
             this.clientsList.Location = new System.Drawing.Point(12, 39);
             this.clientsList.Name = "clientsList";
             this.clientsList.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.clientsList.Size = new System.Drawing.Size(430, 506);
+            this.clientsList.Size = new System.Drawing.Size(430, 448);
             this.clientsList.TabIndex = 0;
             // 
             // imagesList
@@ -70,16 +75,16 @@
             this.imagesList.Name = "imagesList";
             this.imagesList.ReadOnly = true;
             this.imagesList.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.imagesList.Size = new System.Drawing.Size(370, 506);
+            this.imagesList.Size = new System.Drawing.Size(300, 448);
             this.imagesList.TabIndex = 1;
             // 
             // btnUploadImages
             // 
             this.btnUploadImages.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.btnUploadImages.ForeColor = System.Drawing.Color.DarkCyan;
-            this.btnUploadImages.Location = new System.Drawing.Point(981, 95);
+            this.btnUploadImages.Location = new System.Drawing.Point(946, 95);
             this.btnUploadImages.Name = "btnUploadImages";
-            this.btnUploadImages.Size = new System.Drawing.Size(146, 50);
+            this.btnUploadImages.Size = new System.Drawing.Size(181, 50);
             this.btnUploadImages.TabIndex = 3;
             this.btnUploadImages.Text = "تعيين صور جديدة";
             this.btnUploadImages.UseVisualStyleBackColor = true;
@@ -90,9 +95,10 @@
             this.status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblStatusTitle,
             this.lblStatus,
-            this.endWsVendor,
+            this.restartService,
+            this.endService,
             this.statusLabel});
-            this.status.Location = new System.Drawing.Point(0, 562);
+            this.status.Location = new System.Drawing.Point(0, 529);
             this.status.Name = "status";
             this.status.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.status.Size = new System.Drawing.Size(1139, 22);
@@ -113,30 +119,41 @@
             this.lblStatus.Size = new System.Drawing.Size(43, 17);
             this.lblStatus.Text = "لا يعمل";
             // 
-            // endWsVendor
+            // restartService
             // 
-            this.endWsVendor.IsLink = true;
-            this.endWsVendor.Name = "endWsVendor";
-            this.endWsVendor.Size = new System.Drawing.Size(101, 17);
-            this.endWsVendor.Text = "إعادة تشغيل المزود";
-            this.endWsVendor.Visible = false;
-            this.endWsVendor.Click += new System.EventHandler(this.endWsVendor_Click);
+            this.restartService.IsLink = true;
+            this.restartService.Name = "restartService";
+            this.restartService.Size = new System.Drawing.Size(75, 17);
+            this.restartService.Text = "إعادة التشغيل";
+            this.restartService.Visible = false;
+            this.restartService.Click += new System.EventHandler(this.endWsVendor_Click);
+            // 
+            // endService
+            // 
+            this.endService.IsLink = true;
+            this.endService.LinkColor = System.Drawing.Color.Crimson;
+            this.endService.Name = "endService";
+            this.endService.Size = new System.Drawing.Size(74, 17);
+            this.endService.Text = "إقاف التشغيل";
+            this.endService.Visible = false;
+            this.endService.Click += new System.EventHandler(this.endService_Click);
             // 
             // statusLabel
             // 
+            this.statusLabel.ForeColor = System.Drawing.Color.Blue;
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.statusLabel.Size = new System.Drawing.Size(877, 17);
+            this.statusLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.statusLabel.Size = new System.Drawing.Size(829, 17);
             this.statusLabel.Spring = true;
-            this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnOpenVcard
             // 
             this.btnOpenVcard.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.btnOpenVcard.ForeColor = System.Drawing.Color.Black;
-            this.btnOpenVcard.Location = new System.Drawing.Point(824, 39);
+            this.btnOpenVcard.Location = new System.Drawing.Point(754, 39);
             this.btnOpenVcard.Name = "btnOpenVcard";
-            this.btnOpenVcard.Size = new System.Drawing.Size(303, 50);
+            this.btnOpenVcard.Size = new System.Drawing.Size(373, 50);
             this.btnOpenVcard.TabIndex = 8;
             this.btnOpenVcard.Text = " (.VCF ) تحميل جهات اتصال";
             this.btnOpenVcard.UseVisualStyleBackColor = true;
@@ -146,9 +163,9 @@
             // 
             this.btnRunSenderVendor.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.btnRunSenderVendor.ForeColor = System.Drawing.Color.DarkBlue;
-            this.btnRunSenderVendor.Location = new System.Drawing.Point(824, 495);
+            this.btnRunSenderVendor.Location = new System.Drawing.Point(754, 437);
             this.btnRunSenderVendor.Name = "btnRunSenderVendor";
-            this.btnRunSenderVendor.Size = new System.Drawing.Size(303, 50);
+            this.btnRunSenderVendor.Size = new System.Drawing.Size(373, 50);
             this.btnRunSenderVendor.TabIndex = 4;
             this.btnRunSenderVendor.Text = "تشغيل مزود الرسائل";
             this.btnRunSenderVendor.UseVisualStyleBackColor = true;
@@ -158,10 +175,10 @@
             // 
             this.messageBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.messageBox.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.messageBox.Location = new System.Drawing.Point(824, 195);
+            this.messageBox.Location = new System.Drawing.Point(754, 195);
             this.messageBox.Name = "messageBox";
             this.messageBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.messageBox.Size = new System.Drawing.Size(303, 294);
+            this.messageBox.Size = new System.Drawing.Size(373, 199);
             this.messageBox.TabIndex = 9;
             this.messageBox.Text = "";
             this.messageBox.TextChanged += new System.EventHandler(this.messageBox_TextChanged);
@@ -186,9 +203,9 @@
             // 
             this.btnDeleteImages.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.btnDeleteImages.ForeColor = System.Drawing.Color.Crimson;
-            this.btnDeleteImages.Location = new System.Drawing.Point(824, 95);
+            this.btnDeleteImages.Location = new System.Drawing.Point(754, 95);
             this.btnDeleteImages.Name = "btnDeleteImages";
-            this.btnDeleteImages.Size = new System.Drawing.Size(146, 50);
+            this.btnDeleteImages.Size = new System.Drawing.Size(181, 50);
             this.btnDeleteImages.TabIndex = 12;
             this.btnDeleteImages.Text = "حذف جميع الصور";
             this.btnDeleteImages.UseVisualStyleBackColor = true;
@@ -220,11 +237,44 @@
             this.installComponents.Text = "تثبيت المكونات";
             this.installComponents.Click += new System.EventHandler(this.installComponents_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.Crimson;
+            this.label1.Location = new System.Drawing.Point(805, 397);
+            this.label1.Name = "label1";
+            this.label1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.label1.Size = new System.Drawing.Size(325, 13);
+            this.label1.TabIndex = 14;
+            this.label1.Text = "يجب أن تكون الرسالة مكتوبة في سطر واحد فقط دون أي تقسيم يدوي.";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.txtOutput);
+            this.panel1.Location = new System.Drawing.Point(12, 557);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1115, 412);
+            this.panel1.TabIndex = 15;
+            // 
+            // txtOutput
+            // 
+            this.txtOutput.BackColor = System.Drawing.Color.Black;
+            this.txtOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtOutput.ForeColor = System.Drawing.Color.White;
+            this.txtOutput.Location = new System.Drawing.Point(0, 0);
+            this.txtOutput.Multiline = true;
+            this.txtOutput.Name = "txtOutput";
+            this.txtOutput.ReadOnly = true;
+            this.txtOutput.Size = new System.Drawing.Size(1115, 412);
+            this.txtOutput.TabIndex = 0;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1139, 584);
+            this.ClientSize = new System.Drawing.Size(1139, 551);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnDeleteImages);
             this.Controls.Add(this.lblTitleMessage);
             this.Controls.Add(this.messageBox);
@@ -235,10 +285,12 @@
             this.Controls.Add(this.btnUploadImages);
             this.Controls.Add(this.imagesList);
             this.Controls.Add(this.clientsList);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menu;
             this.MaximizeBox = false;
             this.Name = "Main";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Whatsapp Sender (Mini Edition)";
             this.Load += new System.EventHandler(this.Main_Load);
@@ -248,6 +300,8 @@
             this.status.PerformLayout();
             this.menu.ResumeLayout(false);
             this.menu.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -271,7 +325,11 @@
         private System.Windows.Forms.MenuStrip menu;
         private System.Windows.Forms.ToolStripMenuItem systemMenu;
         private System.Windows.Forms.ToolStripMenuItem installComponents;
-        private System.Windows.Forms.ToolStripStatusLabel endWsVendor;
+        private System.Windows.Forms.ToolStripStatusLabel restartService;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TextBox txtOutput;
+        private System.Windows.Forms.ToolStripStatusLabel endService;
     }
 }
 

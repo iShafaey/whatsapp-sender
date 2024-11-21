@@ -1,10 +1,6 @@
 if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
     Write-Host "installing Chocolatey..."
-    Set-ExecutionPolicy Bypass -Scope Process -Force
-    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
-    Invoke-WebRequest https://community.chocolatey.org/install.ps1 -UseBasicP... -OutFile install-choco.ps1
-    .\install-choco.ps1
-    Remove-Item install-choco.ps1 -Force
+    Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 }
 
 if (-not (Get-Command python -ErrorAction SilentlyContinue)) {
@@ -19,3 +15,5 @@ if (Test-Path $requirementsFile) {
 } else {
     Write-Host "Requirements.txt file not found in current folder."
 }
+
+Read-Host -Prompt "Press Enter to exit"
