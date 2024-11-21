@@ -2,6 +2,10 @@
 
 This repository contains a powerful tool developed using C# and Python that allows for automated sending of WhatsApp messages through WhatsApp Web. The tool leverages web automation techniques to interact with WhatsApp's web interface, enabling users to send both text messages and images to contacts or groups programmatically.
 
+## Screenshots
+![Tool Screenshot](https://github.com/iShafaey/whatsapp-sender/blob/main/.Screenshots/Tool.png)
+![Python Script Screenshot](https://github.com/iShafaey/whatsapp-sender/blob/main/.Screenshots/Python-Script.png)
+
 ## Key Features:
 - **Automated Message Sending**: Send WhatsApp messages automatically to any contact or group using a simple, user-friendly script.
 - **Supports Text and Images**: In addition to sending text messages, this tool also allows you to send images, making it suitable for a variety of use cases such as media sharing or marketing.
