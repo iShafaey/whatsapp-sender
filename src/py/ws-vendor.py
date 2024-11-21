@@ -228,7 +228,7 @@ def check_whatsapp_number(driver, phone_number, message):
 
     try:
         # Open the WhatsApp Web URL with the phone number
-        whatsapp_url = f"https://web.whatsapp.com/send?phone={phone_number}&text= "
+        whatsapp_url = f"https://web.whatsapp.com/send?phone={phone_number}&text="
         driver.get(whatsapp_url)
 
         try:
@@ -260,7 +260,7 @@ def check_whatsapp_number(driver, phone_number, message):
 def send_whatsapp_message(phone_number, message, images):
     print_plus(type="WHATSAPP", message=f"Started sending message to {phone_number}", message_color=Fore.CYAN)
     try:
-        whatsapp_url = f"https://web.whatsapp.com/send?phone={phone_number}&text= "
+        whatsapp_url = f"https://web.whatsapp.com/send?phone={phone_number}&text="
         driver.get(whatsapp_url)
 
         if check_whatsapp_number(driver, phone_number, message) == False:
@@ -290,29 +290,28 @@ def send_whatsapp_message(phone_number, message, images):
                         print_plus(type="SYSTEM", message=f"Neither XPath was found: {type(e).__name__}", message_color=Fore.RED)
 
                 file_input.send_keys(absolute_image_path)
-
+                
             # Send the message text after attaching images
-            time.sleep(10)
             wait = WebDriverWait(driver, wait_time)
-            message_box = wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="app"]/div/div[3]/div[2]/div[2]/span/div/div/div/div[2]/div/div[1]/div[3]/div/div/div[2]/div[1]/div[1]/p')))
-            message_box.send_keys(message)
-            message_box.send_keys(Keys.ENTER)
+            attach_files_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'span[data-icon="send"]')))
+            attach_files_button.click()
 
             # time.sleep(0.2)
             # driver.minimize_window()
-        else:
-            # Send the message text when not images
-            wait = WebDriverWait(driver, wait_time)
-            message_box = wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="main"]/footer/div[1]/div/span/div/div[2]/div[1]/div/div[1]/p')))
-            message_box.send_keys(message)
 
-            send_button = wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="main"]/footer/div[1]/div/span/div/div[2]/div[2]/button')))
-            send_button.click()
+        # Send the message text
+        time.sleep(5)
+        wait = WebDriverWait(driver, wait_time)
+        message_box = wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="main"]/footer/div[1]/div/span/div/div[2]/div[1]/div/div[1]/p')))
+        message_box.send_keys(message)
 
+        wait = WebDriverWait(driver, wait_time)
+        send_button = wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="main"]/footer/div[1]/div/span/div/div[2]/div[2]/button')))
+        send_button.click()    
         return True
 
     except Exception as e:
-        print_plus(type="SYSTEM", message=f"Failed to send message: {e}", message_color=Fore.RED)
+        print_plus(type="SYSTEM", message=f"Failed to send message: {type(e).__name__}", message_color=Fore.RED)
         return False
 
 
